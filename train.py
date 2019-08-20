@@ -64,7 +64,7 @@ def train(config, num_classes=1108):
             map5_batch += mapk(labels, results, k=5)
 
             if i % config.train.verbose_interval == 0:
-                print(f'epoch: {epoch}, iter: {i}, top1_batch: {top1_batch / config.train.verbose_interval}, map5_batch: {map5_batch / config.train.verbose_interval}')
+                print(f'epoch: {epoch}, iter: {i}, train_loss: {train_loss}, top1_batch: {top1_batch / config.train.verbose_interval}, map5_batch: {map5_batch / config.train.verbose_interval}')
                 train_loss, top1_batch, map5_batch = 0, 0, 0
 
 
