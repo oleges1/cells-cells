@@ -31,13 +31,13 @@ class ImagesDS(D.Dataset):
                     self.mode, experiment, plate, well, site,
                     base_path=self.img_dir
                 )
-                im = im.astype(np.uint8)
+                im = im.astype('float32')
                 # im = cv2.resize(im, self.target_shape[-1])
             else:
                 save_path = os.path.join(self.img_dir, self.mode, f'{code}_s{site}.jpeg')
-                im = cv2.imread(save_path)
+                im = cv2.imread(save_path).astype('float32')
                 # im = cv2.resize(im, self.target_shape[-1])
-            ims.append(torch.from_numpy(im.astype('float32')))
+            ims.append(torch.from_numpy(im))
         im = torch.cat(ims, dim=-1)
         im = im.permute(2, 1, 0)
         return im / 255. - 0.5
