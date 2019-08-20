@@ -15,7 +15,7 @@ class ImagesDS(D.Dataset):
     def __init__(self, csv_file, img_dir, mode='train', raw=False):
         df = pd.read_csv(csv_file)
         self.records = df.to_records(index=False)
-        self.site = site
+        # self.site = site # TODO: think what to do with this 
         self.mode = mode
         self.raw = raw
         self.img_dir = img_dir
