@@ -3,6 +3,7 @@ import pandas as pd
 import cv2
 import sys
 import os
+import torch
 
 # for initial dataset:
 os.system('git clone https://github.com/recursionpharma/rxrx1-utils')
