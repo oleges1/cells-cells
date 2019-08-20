@@ -13,10 +13,6 @@ with open('config.yaml', 'r') as f:
 
 def train(config, num_classes=1108):
     model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
-    i = 0
-    iter_smooth = 50
-    iter_valid = 200
-    iter_save = 200
     epoch = 0
     if config.train.freeze:
         model.freeze()
