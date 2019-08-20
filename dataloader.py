@@ -23,19 +23,22 @@ class ImagesDS(D.Dataset):
 
     def load_img(self, index):
         code, experiment, plate, well = self.records[index].id_code, self.records[index].experiment, self.records[index].well, self.records[index].plate
-        site = 1 # TODO: think what to do with this
-
-        if self.raw:
-            im = rio.load_site_as_rgb(
-                self.mode, experiment, plate, well, site,
-                base_path=self.img_dir
-            )
-            im = im.astype(np.uint8)
-            # im = cv2.resize(im, self.target_shape[-1])
-        else:
-            save_path = os.path.join(self.img_dir, self.mode, f'{code}_s{site}.jpeg')
-            im = cv2.imread(save_path)
-            # im = cv2.resize(im, self.target_shape[-1])
+        ims = []
+        for site in [1, 2]:
+            if self.raw:
+                im = rio.load_site_as_rgb(
+                    self.mode, experiment, plate, well, site,
+                    base_path=self.img_dir
+                )
+                im = im.astype(np.uint8)
+                # im = cv2.resize(im, self.target_shape[-1])
+            else:
+                save_path = os.path.join(self.img_dir, self.mode, f'{code}_s{site}.jpeg')
+                im = cv2.imread(save_path)
+                # im = cv2.resize(im, self.target_shape[-1])
+            ims.append(im)
+        im = torch.cat(ims)
+        im = im.view(2, 1, 0)
         return im / 255. - 0.5
 
     def __getitem__(self, index):
