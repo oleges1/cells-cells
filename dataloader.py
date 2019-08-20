@@ -12,11 +12,12 @@ import rxrx.io as rio
 # TODO: transforms
 
 class ImagesDS(D.Dataset):
-    def __init__(self, csv_file, img_dir, mode='train', mode='preprocessed'):
+    def __init__(self, csv_file, img_dir, mode='train', raw=False):
         df = pd.read_csv(csv_file)
         self.records = df.to_records(index=False)
         self.site = site
         self.mode = mode
+        self.raw = raw
         self.img_dir = img_dir
         self.len = df.shape[0]
 
@@ -24,7 +25,7 @@ class ImagesDS(D.Dataset):
         code, experiment, plate, well = self.records[index].id_code, self.records[index].experiment, self.records[index].well, self.records[index].plate
         site = 1 # TODO: think what to do with this
 
-        if self.mode == 'raw':
+        if self.raw:
             im = rio.load_site_as_rgb(
                 self.mode, experiment, plate, well, site,
                 base_path=self.img_dir
@@ -34,12 +35,12 @@ class ImagesDS(D.Dataset):
             return im
         else:
             save_path = f'{self.img_dir}/{self.mode}/{code}_s{site}.jpg'
-            im = cv2.imread()
+            im = cv2.imread(save_path)
             im = cv2.resize(im, target_shape[-1])
             return im
 
     def __getitem__(self, index):
-
+        img = self.load_img(index)
         if self.mode == 'train':
             return img, self.records[index].sirna
         else:

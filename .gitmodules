@@ -1,0 +1,3 @@
+[submodule "rxrx1-utils"]
+	path = rxrx1-utils
+	url = https://github.com/recursionpharma/rxrx1-utils

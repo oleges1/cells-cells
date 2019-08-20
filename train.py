@@ -7,8 +7,8 @@ from dataloader import *
 from models import *
 from torch.nn.parallel.data_parallel import data_parallel
 
-
-config = DotDict(yaml.load(join(name, 'config.yaml')))
+with open('config.yaml', 'r') as f:
+    config = DotDict(yaml.load(f))
 
 def train(config, num_classes=1108):
     model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
@@ -75,3 +75,6 @@ def train(config, num_classes=1108):
                 'optimizer': optimizer.state_dict(),
                 'epoch': epoch,
             }, resultDir + '/checkpoint/%08d_optimizer.pth' % (epoch))
+
+if __name__ == "__main__":
+    train(config)

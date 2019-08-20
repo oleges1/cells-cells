@@ -7,3 +7,5 @@ train:
     freeze: False
     lr: 3e-4
     load_cpk: False
+test:
+    use_leak: True
