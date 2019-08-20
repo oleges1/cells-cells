@@ -1,3 +1,5 @@
+import numpy as np
+
 class DotDict(dict):
     """A dictionary that supports dot notation
     as well as dictionary access notation
