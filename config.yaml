@@ -9,7 +9,7 @@ train:
     lr: 0.3e-4
     load_cpk: False
     epochs: 100
-    verbose_interval: 100
+    verbose_interval: 10
     save_period: 1
     result_dir: /content/drive/cells-cells/
     in_colab: True
