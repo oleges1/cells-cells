@@ -39,7 +39,7 @@ class ImagesDS(D.Dataset):
                 # im = cv2.resize(im, self.target_shape[-1])
             ims.append(torch.from_numpy(im))
         im = torch.cat(ims)
-        im = im.view(2, 1, 0)
+        im = im.permute(2, 1, 0)
         return im / 255. - 0.5
 
     def __getitem__(self, index):
