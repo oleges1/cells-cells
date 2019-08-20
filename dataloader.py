@@ -33,7 +33,7 @@ class ImagesDS(D.Dataset):
             im = im.astype(np.uint8)
             # im = cv2.resize(im, self.target_shape[-1])
         else:
-            save_path = f'{self.img_dir}/{self.mode}/{code}_s{site}.jpg'
+            save_path = os.path.join(self.img_dir, self.mode, f'{code}_s{site}.jpg')
             im = cv2.imread(save_path)
             # im = cv2.resize(im, self.target_shape[-1])
         return im / 255. - 0.5
