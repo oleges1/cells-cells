@@ -7,6 +7,9 @@ train:
     freeze: False
     lr: 3e-4
     load_cpk: False
+    epochs: 100
+    verbose_interval: 100
+    save_period: 1
 test:
     use_leak: True
     csv_file: ../new_test.csv
