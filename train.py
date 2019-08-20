@@ -6,6 +6,7 @@ from utils import *
 from dataloader import *
 from models import *
 from torch.nn.parallel.data_parallel import data_parallel
+from torch.utils.data.dataloader import DataLoader
 
 with open('config.yaml', 'r') as f:
     config = DotDict(yaml.load(f))
