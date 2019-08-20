@@ -32,12 +32,11 @@ class ImagesDS(D.Dataset):
             )
             im = im.astype(np.uint8)
             # im = cv2.resize(im, self.target_shape[-1])
-            return im
         else:
             save_path = f'{self.img_dir}/{self.mode}/{code}_s{site}.jpg'
             im = cv2.imread(save_path)
             # im = cv2.resize(im, self.target_shape[-1])
-            return im
+        return im / 255. - 0.5
 
     def __getitem__(self, index):
         img = self.load_img(index)
