@@ -12,6 +12,7 @@ train:
     verbose_interval: 100
     save_period: 1
     result_dir: /content/drive/cells-cells/
+    in_colab: True
 test:
     use_leak: True
     csv_file: ../new_test.csv

@@ -24,7 +24,8 @@ def train(config, num_classes=1108):
 
     resultDir = config.train.result_dir
     checkPoint = join(resultDir, 'checkpoint')
-    os.makedirs(checkPoint, exist_ok=True)
+    if not config.train.in_colab:
+        os.makedirs(checkPoint, exist_ok=True)
 
     train_dataset = ImagesDS(config.train.csv_file, config.train.img_dir)
     # val_dataset = ImagesDS(config.train.val_csv_file, config.train.val_img_dir)
