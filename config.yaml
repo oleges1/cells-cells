@@ -3,7 +3,7 @@ train:
     batch_size: 16
     num_workers: 4
     csv_file: ../new_train.csv
-    img_dir: ../train
+    img_dir: ../
     model_name: seresnext50
     freeze: False
     lr: 0.3e-4
@@ -16,4 +16,4 @@ train:
 test:
     use_leak: True
     csv_file: ../new_test.csv
-    img_dir: ../test
+    img_dir: ../
