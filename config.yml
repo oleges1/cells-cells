@@ -6,3 +6,4 @@ train:
     model_name: seresnext50
     freeze: False
     lr: 3e-4
+    load_cpk: False
