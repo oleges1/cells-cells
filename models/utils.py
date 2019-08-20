@@ -87,7 +87,7 @@ def weights_init_classifier(m):
 def try_bestfitting_loss(results, labels, selected_num=10):
     batch_size, class_num = results.shape
     labels = labels.view(-1, 1)
-    one_hot_target = torch.zeros(batch_size, class_num + 1).cuda().scatter_(1, labels, 1)[:, :1108].contiguous()
+    one_hot_target = torch.zeros(batch_size, class_num).cuda().scatter_(1, labels, 1)[:, :1108].contiguous()
     error_loss = lovasz_hinge(results, one_hot_target)
     labels = labels.view(-1)
     indexs_new = (labels != 1108).nonzero().view(-1)
@@ -104,7 +104,7 @@ def sigmoid_loss(results, labels, topk=10):
         results = results.view(1, -1)
     batch_size, class_num = results.shape
     labels = labels.view(-1, 1)
-    one_hot_target = torch.zeros(batch_size, class_num + 1).cuda().scatter_(1, labels, 1)[:, :1108 * 2]
+    one_hot_target = torch.zeros(batch_size, class_num).cuda().scatter_(1, labels, 1)[:, :1108 * 2]
     #lovasz_loss = lovasz_hinge(results, one_hot_target)
     error = torch.abs(one_hot_target - torch.sigmoid(results))
     error = error.topk(topk, 1, True, True)[0].contiguous()
