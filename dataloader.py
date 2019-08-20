@@ -31,12 +31,12 @@ class ImagesDS(D.Dataset):
                 base_path=self.img_dir
             )
             im = im.astype(np.uint8)
-            im = cv2.resize(im, target_shape[-1])
+            # im = cv2.resize(im, self.target_shape[-1])
             return im
         else:
             save_path = f'{self.img_dir}/{self.mode}/{code}_s{site}.jpg'
             im = cv2.imread(save_path)
-            im = cv2.resize(im, target_shape[-1])
+            # im = cv2.resize(im, self.target_shape[-1])
             return im
 
     def __getitem__(self, index):
