@@ -11,6 +11,7 @@ train:
     epochs: 100
     verbose_interval: 100
     save_period: 1
+    result_dir: /content/drive/cells-cells/
 test:
     use_leak: True
     csv_file: ../new_test.csv

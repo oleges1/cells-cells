@@ -22,7 +22,7 @@ def train(config, num_classes=1108):
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config.train.lr,  betas=(0.9, 0.99), weight_decay=0.0002)
 
-    resultDir = join(config.name, config.train.model_name)
+    resultDir = config.train.result_dir
     checkPoint = join(resultDir, 'checkpoint')
     os.makedirs(checkPoint, exist_ok=True)
 
