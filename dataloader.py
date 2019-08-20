@@ -15,13 +15,13 @@ class ImagesDS(D.Dataset):
     def __init__(self, csv_file, img_dir, mode='train', raw=False):
         df = pd.read_csv(csv_file)
         self.records = df.to_records(index=False)
-        # self.site = site # TODO: think what to do with this 
+        # self.site = site # TODO: think what to do with this
         self.mode = mode
         self.raw = raw
         self.img_dir = img_dir
         self.len = df.shape[0]
 
-    def load_img(index):
+    def load_img(self, index):
         code, experiment, plate, well = self.records[index].id_code, self.records[index].experiment, self.records[index].well, self.records[index].plate
         site = 1 # TODO: think what to do with this
 
