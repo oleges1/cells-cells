@@ -11,7 +11,7 @@ train:
     epochs: 100
     verbose_interval: 50
     save_period: 1
-    result_dir: /content/drive/cells-cells/
+    result_dir: /content/drive/'My Drive'/cells-cells
     in_colab: True
 test:
     use_leak: True

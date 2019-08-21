@@ -65,7 +65,7 @@ def train(config, num_classes=1108):
                 train_loss, top1_batch, map5_batch = 0, 0, 0
 
 
-        if epoch % config.train.save_period == 0 and not epoch == start_epoch:
+        if epoch % config.train.save_period == 0:
             torch.save(model.state_dict(), resultDir + '/checkpoint/%08d_model.pth' % (epoch))
             torch.save({
                 'optimizer': optimizer.state_dict(),
