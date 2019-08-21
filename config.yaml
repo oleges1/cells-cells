@@ -11,11 +11,11 @@ train:
     epochs: 100
     verbose_interval: 50
     save_period: 1
-    result_dir: /content/drive/'My Drive'/cells-cells
+    result_dir: /content/drive/My Drive/cells-cells
     in_colab: True
 test:
     use_leak: True
     csv_file: new_test.csv
     img_dir: .
-    checkpoints_path: /content/drive/'My Drive'/cells-cells/checkpoint
+    checkpoints_path: /content/drive/My Drive/cells-cells/checkpoint
     epoch: 5
