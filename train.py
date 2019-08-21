@@ -1,4 +1,5 @@
 from os.path import join
+import time
 import os
 import yaml
 import torch
@@ -66,6 +67,9 @@ def train(config, num_classes=1108):
 
 
         if epoch % config.train.save_period == 0:
+            os.system("touch " + resultDir + "/checkpoint/%08d_model.pth" % (epoch))
+            os.system("touch " + resultDir + "/checkpoint/%08d_optimizer.pth" % (epoch))
+            time.sleep(1)
             torch.save(model.state_dict(), resultDir + '/checkpoint/%08d_model.pth' % (epoch))
             torch.save({
                 'optimizer': optimizer.state_dict(),
