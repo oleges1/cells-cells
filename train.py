@@ -33,7 +33,7 @@ def train(config, num_classes=1108):
         model.load_pretrain(os.path.join(checkPoint, '%08d_model.pth' % (config.train.start_epoch)),skip=[])
         cpk = torch.load(os.path.join(checkPoint, '%08d_optimizer.pth' % (config.train.start_epoch)))
         optimizer.load_state_dict(cpk['optimizer'])
-        adjust_learning_rate(optimizer, lr)
+        adjust_learning_rate(optimizer, config.train.lr)
         start_epoch = cpk['epoch']
     else:
         start_epoch = 0
