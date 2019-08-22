@@ -40,7 +40,7 @@ def train(config, num_classes=1108):
 
     top1_batch, map5_batch = 0, 0
 
-    for epoch in range(start_epoch, config.train.epochs):
+    for epoch in range(start_epoch + 1, config.train.epochs):
         print('Starting:', epoch, 'Iterations:', len(dataloader_train))
         for i, data in enumerate(dataloader_train):
             model.train()
