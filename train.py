@@ -11,7 +11,6 @@ from torch.utils.data.dataloader import DataLoader
 
 def train(config, num_classes=1108):
     model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
-    epoch = 0
     if config.train.freeze:
         model.freeze()
 

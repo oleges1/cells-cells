@@ -7,7 +7,8 @@ train:
     model_name: seresnext50
     freeze: False
     lr: 0.3e-4
-    load_cpk: False
+    load_cpk: True
+    start_epoch: 5
     epochs: 100
     verbose_interval: 50
     save_period: 1
