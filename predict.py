@@ -25,14 +25,17 @@ def predict_model(config):
             _, _, outs = model(images)
             outs = torch.sigmoid(outs)
             for name, out in zip(names, outs):
-                result[name] = int(out.argmax())
+                result[name] = int(out.argmax().cpu().numpy())
     return result
 
 def leak_postprocess(config, predicts):
-    pass
+    test_csv = pd.read_csv(config.test.csv_file)
+    # TODO: dodododododo 
 
 def save_csv(config, predicts):
-    pass
+    submission = pd.read_csv(config.test.csv_file)
+    submission['sirna'] = preds.astype(int)
+    submission.to_csv('submission.csv', index=False, columns=['id_code', 'sirna'])
 
 if __name__ == "__main__":
     with open('config.yaml', 'r') as f:
