@@ -6,6 +6,7 @@ https://www.kaggle.com/c/recursion-cellular-image-classification
  * [resized](https://www.kaggle.com/olegdesh/cellsresized)
  * [original size](https://www.kaggle.com/olegdesh/cellsjpg)
 
+TRAINED MODELS: [link](https://drive.google.com/drive/folders/17nlf0TSxrZxM7JBCruto-BdiLbJfz7Nz?usp=sharing)
 
 TBD:
 * prediction using [leak](https://www.kaggle.com/zaharch/keras-model-boosted-with-plates-leak)
