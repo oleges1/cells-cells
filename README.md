@@ -13,3 +13,4 @@ TBD:
 * augmentations during training
 * test time augmentations
 * 2 step training with creating special model for each category as in [kernel](https://www.kaggle.com/xhlulu/recursion-2-headed-efficientnet-2-stage-training)
+* Arcface loss && other tricks from face id or person re-identification (?)
