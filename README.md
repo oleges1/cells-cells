@@ -10,6 +10,8 @@ TRAINED MODELS: [link](https://drive.google.com/drive/folders/17nlf0TSxrZxM7JBCr
 
 COLAB NOTEBOOK: [link](https://colab.research.google.com/drive/1AbzkPT1xKNdmmgRlS9s-76iTbI66dJIN)
 
+This model is taken from [repo](https://github.com/earhian/Humpback-Whale-Identification-1st-)
+
 TBD:
 * prediction using [leak](https://www.kaggle.com/zaharch/keras-model-boosted-with-plates-leak)
 * validation during training
