@@ -5,3 +5,11 @@ https://www.kaggle.com/c/recursion-cellular-image-classification
 Датасеты:
  * [resized](https://www.kaggle.com/olegdesh/cellsresized)
  * [original size](https://www.kaggle.com/olegdesh/cellsjpg)
+
+
+TBD:
+* prediction using [leak](https://www.kaggle.com/zaharch/keras-model-boosted-with-plates-leak)
+* validation during training
+* augmentations during training
+* test time augmentations
+* 2 step training with creating special model for each category as in [kernel](https://www.kaggle.com/xhlulu/recursion-2-headed-efficientnet-2-stage-training)
