@@ -28,12 +28,12 @@ def predict_model(config, num_classes=1108):
             _, _, outs = model(images)
             outs = torch.sigmoid(outs)
             for name, out in zip(names, outs):
-                result[name] = int(out.argmax().cpu().numpy())
+                result[name] = out.cpu().numpy()
     test_csv = pd.read_csv(config.test.csv_file)
     test_csv['result'] = test_csv['id_code'].map(result)
-    return test_csv['result']
+    return np.array(test_csv['result'])
 
-def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group):
+def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups):
     sub_test = test_csv.loc[test_csv.experiment == all_test_exp[idx],:]
     assert len(pp_mult) == len(sub_test)
     mask = np.repeat(plate_groups[np.newaxis, :, exp_to_group[idx]], len(pp_mult), axis=0) != \
@@ -55,9 +55,9 @@ def leak_postprocess(config, predicts):
     all_test_exp = test_csv.experiment.unique()
     group_plate_probs = np.zeros((len(all_test_exp),4))
     for idx in range(len(all_test_exp)):
-        preds = sub.loc[test_csv.experiment == all_test_exp[idx],'sirna'].values
+        preds = predicts.loc[test_csv.experiment == all_test_exp[idx]].values
         pp_mult = np.zeros((len(preds),1108))
-        pp_mult[range(len(preds)),preds] = 1
+        pp_mult[range(len(preds)),preds.argmax(axis=-1)] = 1
 
         sub_test = test_csv.loc[test_csv.experiment == all_test_exp[idx],:]
         assert len(pp_mult) == len(sub_test)
@@ -73,8 +73,8 @@ def leak_postprocess(config, predicts):
     for idx in range(len(all_test_exp)):
         #print('Experiment', idx)
         indices = (test_csv.experiment == all_test_exp[idx])
-        preds = predicts[indices,:].copy()
-        preds = select_plate_group(idx, preds)
+        pp_mult = predicts.loc[test_csv.experiment == all_test_exp[idx]].values
+        preds = select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups)
         result[indices] = preds.argmax(1)
     return result
 
