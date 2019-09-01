@@ -20,3 +20,4 @@ test:
     img_dir: .
     checkpoints_path: /content/drive/My Drive/cells-cells/checkpoint
     epoch: 5
+    save_path: /content/drive/My Drive/cells-cells/submission.csv

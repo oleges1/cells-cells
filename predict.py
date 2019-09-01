@@ -12,6 +12,7 @@ from torch.nn.parallel.data_parallel import data_parallel
 from torch.utils.data.dataloader import DataLoader
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 def predict_model(config, num_classes=1108):
     test_dataset = ImagesDS(config.test.csv_file, config.test.img_dir, mode='test')
@@ -81,7 +82,7 @@ def leak_postprocess(config, predicts):
 def save_csv(config, predicts):
     submission = pd.read_csv(config.test.csv_file)
     submission['sirna'] = preds.astype(int)
-    submission.to_csv('submission.csv', index=False, columns=['id_code', 'sirna'])
+    submission.to_csv(config.test.save_path, index=False, columns=['id_code', 'sirna'])
 
 if __name__ == "__main__":
     with open('config.yaml', 'r') as f:
