@@ -12,7 +12,7 @@ from torch.nn.parallel.data_parallel import data_parallel
 from torch.utils.data.dataloader import DataLoader
 import numpy as np
 
-def predict_model(config):
+def predict_model(config, num_classes=1108):
     test_dataset = ImagesDS(config.test.csv_file, config.test.img_dir, mode='test')
     dataloader_test = DataLoader(test_dataset, batch_size=config.train.batch_size, num_workers=config.train.num_workers)
     model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
