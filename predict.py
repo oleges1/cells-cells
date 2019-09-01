@@ -11,13 +11,14 @@ from models import *
 from torch.nn.parallel.data_parallel import data_parallel
 from torch.utils.data.dataloader import DataLoader
 import numpy as np
+import pandas as pd
 
 def predict_model(config, num_classes=1108):
     test_dataset = ImagesDS(config.test.csv_file, config.test.img_dir, mode='test')
     dataloader_test = DataLoader(test_dataset, batch_size=config.train.batch_size, num_workers=config.train.num_workers)
     model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
     model.load_pretrain(os.path.join(config.test.checkpoints_path, '%08d_model.pth' % (config.test.epoch)), skip=[])
-    result = defaultdict(int)
+    result = {}
     with torch.no_grad():
         model.eval()
         for data in tqdm(dataloader_test):
@@ -27,7 +28,9 @@ def predict_model(config, num_classes=1108):
             outs = torch.sigmoid(outs)
             for name, out in zip(names, outs):
                 result[name] = int(out.argmax().cpu().numpy())
-    return result
+    test_csv = pd.read_csv(config.test.csv_file)
+    test_csv['result'] = test_csv['id_code'].map(result)
+    return test_csv['result']
 
 def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group):
     sub_test = test_csv.loc[test_csv.experiment == all_test_exp[idx],:]
