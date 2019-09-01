@@ -81,7 +81,7 @@ def leak_postprocess(config, predicts):
 
 def save_csv(config, predicts):
     submission = pd.read_csv(config.test.csv_file)
-    submission['sirna'] = preds.astype(int)
+    submission['sirna'] = predicts.astype(int)
     submission.to_csv(config.test.save_path, index=False, columns=['id_code', 'sirna'])
 
 if __name__ == "__main__":

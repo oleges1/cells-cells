@@ -19,5 +19,5 @@ test:
     csv_file: new_test.csv
     img_dir: .
     checkpoints_path: /content/drive/My Drive/cells-cells/checkpoint
-    epoch: 5
+    epoch: 12
     save_path: /content/drive/My Drive/cells-cells/submission.csv
