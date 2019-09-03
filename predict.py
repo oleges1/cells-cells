@@ -31,7 +31,7 @@ def predict_model(config, num_classes=1108):
                 result[name] = out.cpu().numpy()
     test_csv = pd.read_csv(config.test.csv_file)
     test_csv['result'] = test_csv['id_code'].map(result)
-    return np.array(test_csv['result'])
+    return test_csv['result'].values
 
 def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups):
     sub_test = test_csv.loc[test_csv.experiment == all_test_exp[idx],:]
@@ -55,7 +55,7 @@ def leak_postprocess(config, predicts):
     all_test_exp = test_csv.experiment.unique()
     group_plate_probs = np.zeros((len(all_test_exp),4))
     for idx in range(len(all_test_exp)):
-        preds = predicts.loc[test_csv.experiment == all_test_exp[idx]].values
+        preds = predicts[test_csv.experiment == all_test_exp[idx]]
         pp_mult = np.zeros((len(preds),1108))
         pp_mult[range(len(preds)),preds.argmax(axis=-1)] = 1
 
