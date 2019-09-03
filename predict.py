@@ -69,7 +69,7 @@ def leak_postprocess(config, predicts):
             group_plate_probs[idx,j] = np.array(pp_mult)[mask].sum()/len(pp_mult)
     exp_to_group = group_plate_probs.argmax(1)
 
-    result = np.zeros((len(test_csv), 1))
+    result = np.zeros((len(test_csv), ))
     for idx in range(len(all_test_exp)):
         #print('Experiment', idx)
         indices = (test_csv.experiment == all_test_exp[idx])
