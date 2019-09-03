@@ -25,7 +25,7 @@ def predict_model(config, num_classes=1108):
         for data in tqdm(dataloader_test):
             images, names = data
             images = images.cuda()
-            _, _, outs = model(images)
+            _, _, outs = data_parallel(model, images)
             outs = torch.sigmoid(outs)
             for name, out in zip(names, outs):
                 result[name] = out.cpu().numpy()
