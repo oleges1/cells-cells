@@ -31,7 +31,7 @@ def predict_model(config, num_classes=1108):
                 result[name] = out.cpu().numpy()
     test_csv = pd.read_csv(config.test.csv_file)
     test_csv['result'] = test_csv['id_code'].map(result)
-    return test_csv['result'].values
+    return np.vstack(test_csv['result'].values)
 
 def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups):
     sub_test = test_csv.loc[test_csv.experiment == all_test_exp[idx],:]
