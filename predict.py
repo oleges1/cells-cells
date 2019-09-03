@@ -30,8 +30,8 @@ def predict_model(config, num_classes=1108):
             for name, out in zip(names, outs):
                 result[name] = out.cpu().numpy()
     test_csv = pd.read_csv(config.test.csv_file)
-    test_csv['result'] = test_csv['id_code'].map(result)
-    return test_csv['result'].values
+    test_csv['sirna'] = test_csv['id_code'].map(result)
+    return test_csv
 
 def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups):
     sub_test = test_csv.loc[test_csv.experiment == all_test_exp[idx],:]
@@ -41,9 +41,8 @@ def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate
     pp_mult[mask] = 0
     return pp_mult
 
-def leak_postprocess(config, predicts):
+def leak_postprocess(config, test_csv):
     train_csv = pd.read_csv(config.train.csv_file)
-    test_csv = pd.read_csv(config.test.csv_file)
 
     plate_groups = np.zeros((1108,4), int)
     for sirna in range(1108):
@@ -55,7 +54,7 @@ def leak_postprocess(config, predicts):
     all_test_exp = test_csv.experiment.unique()
     group_plate_probs = np.zeros((len(all_test_exp),4))
     for idx in range(len(all_test_exp)):
-        preds = predicts[test_csv.experiment == all_test_exp[idx]]
+        preds = test_csv.sirna[test_csv.experiment == all_test_exp[idx]]
         pp_mult = np.zeros((len(preds),1108))
         pp_mult[range(len(preds)),preds.argmax(axis=-1)] = 1
 
@@ -69,20 +68,18 @@ def leak_postprocess(config, predicts):
             group_plate_probs[idx,j] = np.array(pp_mult)[mask].sum()/len(pp_mult)
     exp_to_group = group_plate_probs.argmax(1)
 
-    result = np.zeros((len(test_csv), ))
+    test_csv_copy = test_csv.copy()
     for idx in range(len(all_test_exp)):
         #print('Experiment', idx)
         indices = (test_csv.experiment == all_test_exp[idx])
-        pp_mult = predicts[test_csv.experiment == all_test_exp[idx]]
+        pp_mult = test_csv.sirna[test_csv.experiment == all_test_exp[idx]]
         preds = select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups)
-        result[indices] = preds.argmax(1)
-    return result
+        test_csv_copy.loc[indices, 'sirna'] = preds.argmax(1)
+    return test_csv_copy
 
 
-def save_csv(config, predicts):
-    submission = pd.read_csv(config.test.csv_file)
-    submission['sirna'] = predicts.astype(int)
-    submission.to_csv(config.test.save_path, index=False, columns=['id_code', 'sirna'])
+def save_csv(config, test_csv):
+    test_csv.to_csv(config.test.save_path, index=False, columns=['id_code', 'sirna'])
 
 if __name__ == "__main__":
     with open('config.yaml', 'r') as f:
