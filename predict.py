@@ -73,7 +73,7 @@ def leak_postprocess(config, predicts):
     for idx in range(len(all_test_exp)):
         #print('Experiment', idx)
         indices = (test_csv.experiment == all_test_exp[idx])
-        pp_mult = predicts.loc[test_csv.experiment == all_test_exp[idx]].values
+        pp_mult = predicts[test_csv.experiment == all_test_exp[idx]]
         preds = select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups)
         result[indices] = preds.argmax(1)
     return result
