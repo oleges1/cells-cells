@@ -2,7 +2,7 @@ name: seresnext50_resized
 train:
     batch_size: 16
     num_workers: 4
-    csv_file: new_train.csv
+    csv_file: train.csv
     img_dir: .
     model_name: seresnext50
     freeze: False
@@ -17,7 +17,7 @@ train:
     validation_split: 0.1
 test:
     use_leak: True
-    csv_file: new_test.csv
+    csv_file: test.csv
     img_dir: .
     checkpoints_path: /content/drive/My Drive/cells-cells/checkpoint
     epoch: 6
