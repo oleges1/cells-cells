@@ -45,9 +45,6 @@ def train(config, num_classes=1108):
     dataset_size = len(train_dataset)
     indices = list(range(dataset_size))
     split = int(np.floor(config.train.validation_split * dataset_size))
-    if shuffle_dataset :
-        # np.random.seed(config.train.random_seed)
-        np.random.shuffle(indices)
     train_indices, val_indices = indices[split:], indices[:split]
 
     # Creating PT data samplers and loaders:
