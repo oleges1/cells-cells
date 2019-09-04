@@ -13,7 +13,7 @@ import rxrx.io as rio
 # TODO: transforms
 
 class ImagesDS(D.Dataset):
-    def __init__(self, csv_file, img_dir, mode='train', raw=False):
+    def __init__(self, csv_file, img_dir, mode='train', raw=True):
         df = pd.read_csv(csv_file)
         self.records = df.to_records(index=False)
         # self.site = site # TODO: think what to do with this
@@ -27,7 +27,7 @@ class ImagesDS(D.Dataset):
         ims = []
         for site in [1, 2]:
             if self.raw:
-                im = rio.load_site_as_rgb(
+                im = rio.load_site(
                     self.mode, experiment, plate, well, site,
                     base_path=self.img_dir
                 )

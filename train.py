@@ -10,7 +10,7 @@ from torch.nn.parallel.data_parallel import data_parallel
 from torch.utils.data.dataloader import DataLoader
 
 def train(config, num_classes=1108):
-    model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
+    model = model_whale(num_classes=num_classes, inchannels=12, model_name=config.train.model_name).cuda()
     if config.train.freeze:
         model.freeze()
 
