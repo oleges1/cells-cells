@@ -45,6 +45,9 @@ def train(config, num_classes=1108):
     dataset_size = len(train_dataset)
     indices = list(range(dataset_size))
     split = int(np.floor(config.train.validation_split * dataset_size))
+    if config.train.shuffle_dataset:
+        # np.random.seed(config.train.random_seed)
+        np.random.shuffle(indices)
     train_indices, val_indices = indices[split:], indices[:split]
 
     # Creating PT data samplers and loaders:
@@ -52,9 +55,9 @@ def train(config, num_classes=1108):
     valid_sampler = SubsetRandomSampler(val_indices)
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=config.train.batch_size,
-                                               sampler=train_sampler, shuffle=True, num_workers=config.train.num_workers)
+                                               sampler=train_sampler, num_workers=config.train.num_workers)
     validation_loader = torch.utils.data.DataLoader(train_dataset, batch_size=config.train.batch_size,
-                                                    sampler=valid_sampler, shuffle=True, num_workers=config.train.num_workers)
+                                                    sampler=valid_sample, num_workers=config.train.num_workers)
 
     train_loss = 0.
 

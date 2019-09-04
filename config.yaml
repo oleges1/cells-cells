@@ -15,6 +15,7 @@ train:
     result_dir: /content/drive/My Drive/cells-cells
     in_colab: True
     validation_split: 0.1
+    shuffle_dataset: True
 test:
     use_leak: True
     csv_file: test.csv
