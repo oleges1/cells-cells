@@ -57,7 +57,7 @@ def train(config, num_classes=1108):
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=config.train.batch_size,
                                                sampler=train_sampler, num_workers=config.train.num_workers)
     validation_loader = torch.utils.data.DataLoader(train_dataset, batch_size=config.train.batch_size,
-                                                    sampler=valid_sample, num_workers=config.train.num_workers)
+                                                    sampler=valid_sampler, num_workers=config.train.num_workers)
 
     train_loss = 0.
 
