@@ -17,7 +17,7 @@ from tqdm import tqdm
 def predict_model(config, num_classes=1108):
     test_dataset = ImagesDS(config.test.csv_file, config.test.img_dir, mode='test')
     dataloader_test = DataLoader(test_dataset, batch_size=config.train.batch_size, num_workers=config.train.num_workers)
-    model = model_whale(num_classes=num_classes, inchannels=12, model_name=config.train.model_name).cuda()
+    model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
     model.load_pretrain(os.path.join(config.test.checkpoints_path, '%08d_model.pth' % (config.test.epoch)), skip=[])
     result = {}
     with torch.no_grad():
@@ -31,7 +31,7 @@ def predict_model(config, num_classes=1108):
                 result[name] = out.cpu().numpy()
     test_csv = pd.read_csv(config.test.csv_file)
     test_csv['result'] = test_csv['id_code'].map(result)
-    return np.vstack(test_csv['result'].values)
+    return test_csv['result'].values
 
 def select_plate_group(idx, pp_mult, all_test_exp, test_csv, exp_to_group, plate_groups):
     sub_test = test_csv.loc[test_csv.experiment == all_test_exp[idx],:]
