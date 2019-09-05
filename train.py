@@ -18,7 +18,7 @@ def valid_eval(model, dataLoader_valid):
         map5_batch = 0.
         loss = 0.
         for valid_data in dataLoader_valid:
-            images, labels, names = valid_data
+            images, labels = valid_data
             images = images.cuda()
             labels = labels.cuda().long()
             global_feat, local_feat, results = data_parallel(model, images)

@@ -23,7 +23,7 @@ class ImagesDS(D.Dataset):
         self.len = df.shape[0]
 
     def load_img(self, index):
-        code, experiment, plate, well = self.records[index].id_code, self.records[index].experiment, self.records[index].well, self.records[index].plate
+        code, experiment, plate, well = self.records[index].id_code, self.records[index].experiment, self.records[index].plate, self.records[index].well
         ims = []
         for site in [1, 2]:
             if self.raw:
