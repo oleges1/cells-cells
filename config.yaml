@@ -10,11 +10,11 @@ train:
     load_cpk: False
     start_epoch: 0
     epochs: 100
-    verbose_interval: 50
+    verbose_interval: 200
     save_period: 1
     result_dir: /content/drive/My Drive/cells-cells
     in_colab: True
-    validation_split: 0.1
+    validation_split: 0.02
     shuffle_dataset: True
 test:
     use_leak: True
