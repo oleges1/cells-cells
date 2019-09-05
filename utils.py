@@ -34,7 +34,7 @@ def accuracy(output, target, topk=(1, 5)):
     res = []
     for k in topk:
         correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
-        res.append(correct_k.mul_(100.0 / batch_size))
+        res.append(float(correct_k.mul_(100.0 / batch_size).cpu().numpy()))
     return res
 
 def apk(actual, predicted, k=10):
