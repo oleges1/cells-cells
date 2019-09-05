@@ -12,8 +12,9 @@ from torch.utils.data.sampler import SubsetRandomSampler
 
 def valid_eval(model, dataLoader_valid):
     with torch.no_grad():
-        model.eval()
-        model.mode = 'valid'
+        if config.train.enable_eval_on_val:
+            model.eval()
+            model.mode = 'valid'
         top1_batch = 0.
         map5_batch = 0.
         loss = 0.

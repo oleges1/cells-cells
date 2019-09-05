@@ -16,6 +16,7 @@ train:
     in_colab: True
     validation_split: 0.02
     shuffle_dataset: True
+    enable_eval_on_val: True
 test:
     use_leak: True
     csv_file: test.csv
@@ -23,3 +24,4 @@ test:
     checkpoints_path: /content/drive/My Drive/cells-cells/checkpoint
     epoch: 6
     save_path: /content/drive/My Drive/cells-cells/submission.csv
+    enable_eval: True
