@@ -10,7 +10,7 @@ from torch.nn.parallel.data_parallel import data_parallel
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 
-def valid_eval(model, dataLoader_valid):
+def valid_eval(config, model, dataLoader_valid):
     with torch.no_grad():
         if config.train.enable_eval_on_val:
             model.eval()
@@ -98,7 +98,7 @@ def train(config, num_classes=1108):
                 print(f'epoch: {epoch}, iter: {i}, train_loss: {float(train_loss / config.train.verbose_interval)}, top1_batch: {float(top1_batch / config.train.verbose_interval)}, map5_batch: {float(map5_batch / config.train.verbose_interval)}')
                 train_loss, top1_batch, map5_batch = 0, 0, 0
 
-                valid_loss, top1_valid, map5_valid = valid_eval(model, validation_loader)
+                valid_loss, top1_valid, map5_valid = valid_eval(config, model, validation_loader)
                 print(f'epoch: {epoch}, iter: {i}, valid_loss: {valid_loss}, top1_batch: {top1_valid}, map5_batch: {map5_valid}')
 
 
