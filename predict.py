@@ -21,7 +21,7 @@ def predict_model(config, num_classes=1108):
     model.load_pretrain(os.path.join(config.test.checkpoints_path, '%08d_model.pth' % (config.test.epoch)), skip=[])
     result = {}
     with torch.no_grad():
-        model.eval()
+        model.train()
         for data in tqdm(dataloader_test):
             images, names = data
             images = images.cuda()
