@@ -1,6 +1,6 @@
 name: seresnet50
 train:
-    batch_size: 16
+    batch_size: 24
     num_workers: 4
     csv_file: train.csv
     img_dir: .
@@ -20,8 +20,8 @@ train:
     enable_eval_on_val: True
     random_seed: 42
 loss:
-    global_coef: 1.5
-    local_coef: 1.5
+    global_coef: 15.
+    local_coef: 5.
     verbose_interval: 20
     margin: 1. # before 0.3
     topk_sigmoid: 30
