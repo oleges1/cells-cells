@@ -35,6 +35,9 @@ class model_whale(nn.Module):
         elif model_name == "dpn131":
             self.basemodel = dpn131( pretrained=pretrained)
             planes = 2688
+        elif model_name == 'seresnet50':
+            self.basemodel = se_resnet50(inchannels=inchannels, pretrained='imagenet' if pretrained else None)
+            planes = 2048
         elif model_name == 'seresnext50':
             self.basemodel = se_resnext50_32x4d(inchannels=inchannels, pretrained='imagenet' if pretrained else None)
             planes = 2048
