@@ -23,7 +23,7 @@ loss:
     global_coef: 10.
     local_coef: 3.5
     verbose_interval: 20
-    margin: 1. # before 0.3
+    margin: None # before 0.3, None for SoftMarginLoss
     topk_sigmoid: 30
 test:
     use_leak: True
