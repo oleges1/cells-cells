@@ -22,7 +22,7 @@ train:
 loss:
     global_coef: 15.
     local_coef: 5.
-    verbose_interval: 25
+    verbose_interval: 20
     margin: 1. # before 0.3
     topk_sigmoid: 30
 test:
