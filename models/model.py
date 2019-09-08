@@ -151,12 +151,12 @@ class model_whale(nn.Module):
 
 
 
-    def getLoss(self, global_feat, local_feat, results, labels, local_coef = 3, global_coef = 3):
-        global_loss_value = global_loss(TripletLoss(margin=0.3), global_feat, labels)[0]
-        local_loss_value = local_loss(TripletLoss(margin=0.3), local_feat, labels)[0]
+    def getLoss(self, global_feat, local_feat, results, labels, local_coef=5, global_coef=15, margin=0.3, verbose=False):
+        global_loss_value = global_loss(TripletLoss(margin=margin), global_feat, labels)[0]
+        local_loss_value = local_loss(TripletLoss(margin=margin), local_feat, labels)[0]
         loss_ = sigmoid_loss(results, labels, topk=30)
-
-        print(f'Losses debug: global_loss_value: {global_loss_value}, local_loss_value: {local_loss_value}, sigmoid loss: {loss_}' )
+        if verbose:
+            print(f'Losses debug: global_loss_value: {global_loss_value}, local_loss_value: {local_loss_value}, sigmoid loss: {loss_}' )
         self.loss = global_loss_value * global_coef + local_loss_value * local_coef + loss_
 
 
