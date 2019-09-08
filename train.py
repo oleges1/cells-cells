@@ -31,7 +31,7 @@ def valid_eval(config, model, dataLoader_valid):
         return loss / len(dataLoader_valid), top1_batch / len(dataLoader_valid), map5_batch / len(dataLoader_valid)
 
 def train(config, num_classes=1108):
-    model = model_whale(num_classes=num_classes, inchannels=12, model_name=config.train.model_name).cuda()
+    model = model_whale(num_classes=num_classes, inchannels=12, model_name=config.train.model_name, pretrained=config.train.pretrained).cuda()
     if config.train.freeze:
         model.freeze()
 
@@ -47,7 +47,7 @@ def train(config, num_classes=1108):
     indices = list(range(dataset_size))
     split = int(np.floor(config.train.validation_split * dataset_size))
     if config.train.shuffle_dataset:
-        # np.random.seed(config.train.random_seed)
+        np.random.seed(config.train.random_seed)
         np.random.shuffle(indices)
     train_indices, val_indices = indices[split:], indices[:split]
 

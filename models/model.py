@@ -9,46 +9,46 @@ import torch.nn.utils.weight_norm as weightNorm
 
 
 class model_whale(nn.Module):
-    def __init__(self, num_classes=5005, inchannels=3, model_name='resnet34'):
+    def __init__(self, num_classes=5005, inchannels=3, model_name='resnet34', pretrained=False):
         super().__init__()
         planes = 512
         self.model_name = model_name
 
         if model_name == 'xception':
-            self.basemodel = xception(True)
+            self.basemodel = xception(pretrained)
             planes = 2048
         elif model_name == 'inceptionv4':
-            self.basemodel = inceptionv4(pretrained='imagenet')
+            self.basemodel = inceptionv4(pretrained='imagenet' if pretrained else False)
             planes = 1536
         elif model_name == 'dpn68':
-            self.basemodel = dpn68(pretrained=True)
+            self.basemodel = dpn68(pretrained=pretrained)
             planes = 832
         elif model_name == 'dpn92':
-            self.basemodel = dpn92(pretrained=True)
+            self.basemodel = dpn92(pretrained=pretrained)
             planes = 2688
         elif model_name == "dpn98":
-            self.basemodel = dpn98( pretrained=True)
+            self.basemodel = dpn98( pretrained=pretrained)
             planes = 2688
         elif model_name == "dpn107":
-            self.basemodel = dpn107( pretrained=True)
+            self.basemodel = dpn107( pretrained=pretrained)
             planes = 2688
         elif model_name == "dpn131":
-            self.basemodel = dpn131( pretrained=True)
+            self.basemodel = dpn131( pretrained=pretrained)
             planes = 2688
         elif model_name == 'seresnext50':
-            self.basemodel = se_resnext50_32x4d(inchannels=inchannels, pretrained='imagenet')
+            self.basemodel = se_resnext50_32x4d(inchannels=inchannels, pretrained='imagenet' if pretrained else False)
             planes = 2048
         elif model_name == 'seresnext101':
-            self.basemodel = se_resnext101_32x4d(inchannels=inchannels, pretrained='imagenet')
+            self.basemodel = se_resnext101_32x4d(inchannels=inchannels, pretrained='imagenet' if pretrained else False)
             planes = 2048
         elif model_name == 'seresnet101':
-            self.basemodel = se_resnet101(pretrained='imagenet',  inchannels=inchannels)
+            self.basemodel = se_resnet101(pretrained='imagenet' if pretrained else False,  inchannels=inchannels)
             planes = 2048
         elif model_name == 'senet154':
-            self.basemodel = senet154(pretrained='imagenet', inchannels=inchannels)
+            self.basemodel = senet154(pretrained='imagenet' if pretrained else False, inchannels=inchannels)
             planes = 2048
         elif model_name == "seresnet152":
-            self.basemodel = se_resnet152(pretrained='imagenet')
+            self.basemodel = se_resnet152(pretrained='imagenet' if pretrained else False)
             planes = 2048
         elif model_name == 'nasnet':
             self.basemodel = nasnetalarge()
@@ -83,7 +83,7 @@ class model_whale(nn.Module):
         local_feat = local_feat.squeeze(-1).permute(0, 2, 1)
         local_feat = l2_norm(local_feat, axis=-1)
 
-        out = self.fc(global_feat) * 16
+        out = self.fc(global_feat) # * 16
         return global_feat, local_feat, out
 
     def freeze_bn(self):
@@ -156,6 +156,7 @@ class model_whale(nn.Module):
                       local_loss(TripletLoss(margin=0.3), local_feat, labels)[0]
         loss_ = sigmoid_loss(results, labels, topk=30)
 
+        print(f'Losses debug: triple_loss {triple_loss}, sigmoid loss: {loss_}' )
         self.loss = triple_loss + loss_
 
 
