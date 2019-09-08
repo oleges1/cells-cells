@@ -23,7 +23,7 @@ def valid_eval(config, model, dataLoader_valid):
             images = images.cuda()
             labels = labels.cuda().long()
             global_feat, local_feat, results = data_parallel(model, images)
-            model.getLoss(global_feat, local_feat, results, labels, verbose=(i % config.train.verbose_interval == 0))
+            model.getLoss(global_feat, local_feat, results, labels, config, verbose=(i % config.loss.verbose_interval == 0))
             loss += model.loss
             results = torch.sigmoid(results)
             top1_batch += accuracy(results, labels, topk=[1])[0]
@@ -83,7 +83,7 @@ def train(config, num_classes=1108):
             images = images.cuda()
             labels = labels.cuda().long()
             global_feat, local_feat, results = data_parallel(model, images)
-            model.getLoss(global_feat, local_feat, results, labels, verbose=(i % config.train.verbose_interval == 0))
+            model.getLoss(global_feat, local_feat, results, labels, config, verbose=(i % config.loss.verbose_interval == 0))
             batch_loss = model.loss
 
             optimizer.zero_grad()

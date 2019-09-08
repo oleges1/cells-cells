@@ -19,6 +19,12 @@ train:
     shuffle_dataset: True
     enable_eval_on_val: True
     random_seed: 42
+loss:
+    global_coef: 15.
+    local_coef: 5.
+    verbose_interval: 25
+    margin: 1. # before 0.3
+    topk_sigmoid: 30
 test:
     use_leak: True
     csv_file: test.csv
