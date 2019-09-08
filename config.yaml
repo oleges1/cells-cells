@@ -4,7 +4,7 @@ train:
     num_workers: 4
     csv_file: train.csv
     img_dir: .
-    model_name: seresnet50
+    model_name: seresnet50 # better: seresnext50
     pretrained: True
     freeze: False
     lr: 0.3e-4
@@ -21,7 +21,7 @@ train:
     random_seed: 42
 loss:
     global_coef: 7.
-    local_coef: 2000.
+    local_coef: 5000.
     verbose_interval: 20
     margin: # 1 # before 0.3, empty for SoftMarginLoss
     topk_sigmoid: 30
