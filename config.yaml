@@ -4,7 +4,7 @@ train:
     num_workers: 4
     csv_file: train.csv
     img_dir: .
-    model_name: resnet50
+    model_name: resnet34
     pretrained: True
     freeze: False
     lr: 0.3e-4
