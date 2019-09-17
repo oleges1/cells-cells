@@ -4,7 +4,7 @@ train:
     num_workers: 4
     csv_file: train.csv
     img_dir: .
-    model_name: resnet34
+    model_name: resnet50
     pretrained: True
     freeze: False
     lr: 0.3e-4
@@ -20,8 +20,8 @@ train:
     enable_eval_on_val: True
     random_seed: 42
 loss:
-    global_coef: 5.
-    local_coef: 10.
+    global_coef: 7.
+    local_coef: 3.
     verbose_interval: 20
     margin: 1. # before 0.3, empty for SoftMarginLoss
     topk_sigmoid: 30
