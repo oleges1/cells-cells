@@ -1,5 +1,6 @@
 import torchvision.models as tvm
 import torch.nn.functional as F
+import torch.nn as nn
 from models.modelZoo import *
 from models.arcFaceloss import *
 from models.triplet_loss import *
@@ -56,6 +57,46 @@ class model_whale(nn.Module):
         elif model_name == 'nasnet':
             self.basemodel = nasnetalarge()
             planes = 4032
+        elif model_name == 'resnet18':
+            model = tvm.resnet18(pretrained=pretrained)
+            layers = list(model.children())
+            layers.pop()
+            layers.pop(0)
+            layers.insert(0, nn.Conv2d(inchannels, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False))
+            self.basemodel = nn.Sequential(*layers)
+            planes = 512
+        elif model_name == 'resnet34':
+            model = tvm.resnet34(pretrained=pretrained)
+            layers = list(model.children())
+            layers.pop()
+            layers.pop(0)
+            layers.insert(0, nn.Conv2d(inchannels, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False))
+            self.basemodel = nn.Sequential(*layers)
+            planes = 512
+        elif model_name == 'resnet50':
+            model = tvm.resnet50(pretrained=pretrained)
+            layers = list(model.children())
+            layers.pop()
+            layers.pop(0)
+            layers.insert(0, nn.Conv2d(inchannels, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False))
+            self.basemodel = nn.Sequential(*layers)
+            planes = 2048
+        elif model_name == 'resnet101':
+            model = tvm.resnet101(pretrained=pretrained)
+            layers = list(model.children())
+            layers.pop()
+            layers.pop(0)
+            layers.insert(0, nn.Conv2d(inchannels, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False))
+            self.basemodel = nn.Sequential(*layers)
+            planes = 2048
+        elif model_name == 'resnet152':
+            model = tvm.resnet152(pretrained=pretrained)
+            layers = list(model.children())
+            layers.pop()
+            layers.pop(0)
+            layers.insert(0, nn.Conv2d(inchannels, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False))
+            self.basemodel = nn.Sequential(*layers)
+            planes = 2048
         else:
             assert False, "{} is error".format(model_name)
 
