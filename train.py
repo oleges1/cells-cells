@@ -31,7 +31,7 @@ def valid_eval(config, model, dataLoader_valid):
         return loss / len(dataLoader_valid), top1_batch / len(dataLoader_valid), map5_batch / len(dataLoader_valid)
 
 def train(config, num_classes=1108):
-    model = model_whale(num_classes=num_classes, inchannels=12, model_name=config.train.model_name, pretrained=config.train.pretrained).cuda()
+    model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name, pretrained=config.train.pretrained).cuda()
     if config.train.freeze:
         model.freeze()
 
@@ -41,8 +41,7 @@ def train(config, num_classes=1108):
     checkPoint = join(resultDir, 'checkpoint')
     if not config.train.in_colab:
         os.makedirs(checkPoint, exist_ok=True)
-
-    train_dataset = ImagesDS(config.train.csv_file, config.train.img_dir)
+    train_dataset = CustomDataset(config.train.csv_file, config.train.img_dir, transforms=transforms['train'])
     dataset_size = len(train_dataset)
     indices = list(range(dataset_size))
     split = int(np.floor(config.train.validation_split * dataset_size))
