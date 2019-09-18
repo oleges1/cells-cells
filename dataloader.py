@@ -7,6 +7,7 @@ import cv2
 import sys
 import os
 import torch
+from PIL import Image
 
 # for initial dataset:
 # os.system('git clone https://github.com/recursionpharma/rxrx1-utils')
@@ -45,7 +46,7 @@ class CustomDataset(Dataset):
     @staticmethod
     def _load_img_as_numpy(file_name):
         with Image.open(file_name) as img:
-            return np.array(img).astype('float')
+            return np.array(img).astype('float') / 255
 
     def _get_img_path(self, index, channel):
         experiment, well, plate = self.records[index].experiment, self.records[index].well, self.records[index].plate
