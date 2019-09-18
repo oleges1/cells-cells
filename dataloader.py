@@ -88,7 +88,7 @@ transforms = {
                                border_mode=cv2.BORDER_CONSTANT),
                                # , value=0),
             A.OpticalDistortion(distort_limit=0.11, shift_limit=0.15,
-                                border_mode=cv2.BORDER_CONSTANT)
+                                border_mode=cv2.BORDER_CONSTANT),
                                 # value=0),
             A.NoOp()
         ]),
