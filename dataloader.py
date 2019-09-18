@@ -8,6 +8,7 @@ import sys
 import os
 import torch
 from PIL import Image
+import numpy as np
 
 # for initial dataset:
 # os.system('git clone https://github.com/recursionpharma/rxrx1-utils')
