@@ -13,25 +13,28 @@ from torch.utils.data.dataloader import DataLoader
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
+from collections import defaultdict
+from functools import partial
 
 def predict_model(config, num_classes=1108):
-    test_dataset = CustomDataset(config.test.csv_file, config.test.img_dir, mode='test')
-    dataloader_test = DataLoader(test_dataset, batch_size=config.train.batch_size, num_workers=config.train.num_workers)
     model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
     model.load_pretrain(os.path.join(config.test.checkpoints_path, '%08d_model.pth' % (config.test.epoch)), skip=[])
-    result = {}
-    with torch.no_grad():
-        if config.test.enable_eval:
-            model.eval()
-        else:
-            model.train()
-        for data in tqdm(dataloader_test):
-            images, names = data
-            images = images.cuda()
-            _, _, outs = data_parallel(model, images)
-            outs = torch.sigmoid(outs)
-            for name, out in zip(names, outs):
-                result[name] = out.cpu().numpy()
+    result = defaultdict(partial(np.ndarray, 0))
+    for site in [1, 2]:
+        test_dataset = CustomDataset(config.test.csv_file, config.test.img_dir, mode='test', site=site)
+        dataloader_test = DataLoader(test_dataset, batch_size=config.train.batch_size, num_workers=config.train.num_workers)
+        with torch.no_grad():
+            if config.test.enable_eval:
+                model.eval()
+            else:
+                model.train()
+            for data in tqdm(dataloader_test):
+                images, names = data
+                images = images.cuda()
+                _, _, outs = data_parallel(model, images)
+                outs = torch.sigmoid(outs)
+                for name, out in zip(names, outs):
+                    result[name] += out.cpu().numpy()
     test_csv = pd.read_csv(config.test.csv_file)
     test_csv['result'] = test_csv['id_code'].map(result)
     return np.vstack(test_csv['result'].values)

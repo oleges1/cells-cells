@@ -29,7 +29,7 @@ def create_transformer(transformations, images):
     )
 
 class CustomDataset(Dataset):
-    def __init__(self, csv_file, img_dir, mode='train', site=1, channels=[1,2,3,4,5,6], transforms=None):
+    def __init__(self, csv_file, img_dir, mode='train', site=[1, 2], channels=[1,2,3,4,5,6], transforms=None):
         df = pd.read_csv(csv_file)
         self.records = df.to_records(index=False)
         self.channels = channels
@@ -51,7 +51,10 @@ class CustomDataset(Dataset):
 
     def _get_img_path(self, index, channel):
         experiment, well, plate = self.records[index].experiment, self.records[index].well, self.records[index].plate
-        return '/'.join([self.img_dir,self.mode,experiment,'Plate{}'.format(plate),'{}_s{}_w{}.png'.format(well, self.site, channel)])
+        site = self.site
+        if not isinstance(site, int):
+            site = np.random.choice(site)
+        return '/'.join([self.img_dir,self.mode,experiment,'Plate{}'.format(plate),'{}_s{}_w{}.png'.format(well, site, channel)])
 
     def __getitem__(self, index):
         paths = [self._get_img_path(index, ch) for ch in self.channels]
