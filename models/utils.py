@@ -4,6 +4,8 @@ from torch.autograd import Variable
 import torch
 from models.lovasz import *
 
+cross_entropy = nn.CrossEntropyLoss()
+
 class FocalLoss(nn.Module):
     def __init__(self, gamma=2.0, alpha=None, size_average=True):
         super(FocalLoss, self).__init__()

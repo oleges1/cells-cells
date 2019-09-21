@@ -8,13 +8,11 @@ from models.utils import *
 import torch.nn.utils.weight_norm as weightNorm
 
 
-
 class model_whale(nn.Module):
     def __init__(self, num_classes=5005, inchannels=3, model_name='resnet34', pretrained=False):
         super().__init__()
         planes = 512
         self.model_name = model_name
-        self.criterion = nn.CrossEntropyLoss()
 
         if model_name == 'xception':
             self.basemodel = xception(pretrained)
@@ -202,9 +200,9 @@ class model_whale(nn.Module):
         # loss_30 = sigmoid_loss(results, labels, topk=30)
         # loss_5 = sigmoid_loss(results, labels, topk=5)
         # loss_1 = sigmoid_loss(results, labels, topk=1)
-        loss_ce = self.criterion(results, labels)
+        loss_ce = cross_entropy(results, labels)
         if verbose:
-            print(f'Losses debug: global_loss_value: {config.loss.global_coef * global_loss_value}, local_loss_value: {config.loss.local_coef * local_loss_value}, sigmoid loss: {loss_}' )
+            print(f'Losses debug: global_loss_value: {config.loss.global_coef * global_loss_value}, local_loss_value: {config.loss.local_coef * local_loss_value}, sigmoid loss: {loss_ce}' )
         self.loss = global_loss_value * config.loss.global_coef + local_loss_value * config.loss.local_coef + loss_ce
 
 
