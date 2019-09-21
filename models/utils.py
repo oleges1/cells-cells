@@ -104,14 +104,14 @@ def sigmoid_loss(results, labels, topk=10):
         results = results.view(1, -1)
     batch_size, class_num = results.shape
     labels = labels.view(-1, 1)
-    one_hot_target = torch.zeros(batch_size, class_num).cuda().scatter_(1, labels, 1)[:, :1108 * 2]
+    one_hot_target = torch.zeros(batch_size, class_num).cuda().scatter_(1, labels, 1)[:, :1108]
     #lovasz_loss = lovasz_hinge(results, one_hot_target)
     error = torch.abs(one_hot_target - torch.sigmoid(results))
     error = error.topk(topk, 1, True, True)[0].contiguous()
     target_error = torch.zeros_like(error).float().cuda()
     error_loss = nn.BCELoss(reduce=True)(error, target_error)
     labels = labels.view(-1)
-    indexs_new = (labels != 1108 * 2).nonzero().view(-1)
+    indexs_new = (labels != 1108).nonzero().view(-1)
     if len(indexs_new) == 0:
         return error_loss
     results_nonew = results[torch.arange(0, len(results))[indexs_new], labels[indexs_new]].contiguous()
