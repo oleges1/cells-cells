@@ -197,13 +197,12 @@ class model_whale(nn.Module):
     def getLoss(self, global_feat, local_feat, results, labels, config, verbose=False):
         global_loss_value = global_loss(TripletLoss(margin=config.loss.margin), global_feat, labels)[0]
         local_loss_value = local_loss(TripletLoss(margin=config.loss.margin), local_feat, labels)[0]
-        # loss_30 = sigmoid_loss(results, labels, topk=30)
-        # loss_5 = sigmoid_loss(results, labels, topk=5)
-        # loss_1 = sigmoid_loss(results, labels, topk=1)
-        loss_ce = cross_entropy(results, labels)
+        loss_30 = sigmoid_loss(results, labels, topk=30)
+        loss_5 = sigmoid_loss(results, labels, topk=5)
+        # loss_ce = cross_entropy(results, labels)
         if verbose:
-            print(f'Losses debug: global_loss_value: {config.loss.global_coef * global_loss_value}, local_loss_value: {config.loss.local_coef * local_loss_value}, sigmoid loss: {loss_ce}' )
-        self.loss = global_loss_value * config.loss.global_coef + local_loss_value * config.loss.local_coef + loss_ce
+            print(f'Losses debug: global_loss_value: {config.loss.global_coef * global_loss_value}, local_loss_value: {config.loss.local_coef * local_loss_value}, sigmoid loss: {loss_30 + loss_5}' )
+        self.loss = global_loss_value * config.loss.global_coef + local_loss_value * config.loss.local_coef + loss_30 + loss_5
 
 
 
