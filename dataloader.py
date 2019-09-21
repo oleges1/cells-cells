@@ -90,25 +90,25 @@ transforms = {
         A.OneOf([
             A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.1,
                                rotate_limit=15,
-                               border_mode=cv2.BORDER_CONSTANT),
+                               border_mode=cv2.BORDER_CONSTANT, value=0),
                                # , value=0),
-            A.OpticalDistortion(distort_limit=0.11, shift_limit=0.15,
-                                border_mode=cv2.BORDER_CONSTANT),
+            # A.OpticalDistortion(distort_limit=0.11, shift_limit=0.15,
+            #                     border_mode=cv2.BORDER_CONSTANT),
                                 # value=0),
             A.NoOp()
         ]),
 #         ZeroTopAndBottom(p=0.3),
-        A.RandomSizedCrop(min_max_height=(int(512 * 0.75), 512),
-                          height=512,
-                          width=512, p=0.3),
-        A.OneOf([
-            A.RandomBrightnessContrast(brightness_limit=0.5,
-                                       contrast_limit=0.4),
-#             IndependentRandomBrightnessContrast(brightness_limit=0.25,
-#                                                 contrast_limit=0.24),
-            A.RandomGamma(gamma_limit=(50, 150)),
-            A.NoOp()
-        ]),
+        A.RandomSizedCrop(min_max_height=(int(512 * 0.25), int(512 * 0.75)),
+                          height=256,
+                          width=256, p=1.),
+#         A.OneOf([
+#             A.RandomBrightnessContrast(brightness_limit=0.5,
+#                                        contrast_limit=0.4),
+# #             IndependentRandomBrightnessContrast(brightness_limit=0.25,
+# #                                                 contrast_limit=0.24),
+#             A.RandomGamma(gamma_limit=(50, 150)),
+#             A.NoOp()
+#         ]),
 #         A.OneOf([
 #             FancyPCA(alpha_std=4),
 #             A.HueSaturationValue(hue_shift_limit=5,
@@ -122,5 +122,8 @@ transforms = {
 #         ]),
         A.HorizontalFlip(p=0.5),
         A.VerticalFlip(p=0.5)
+    ],
+    'test' : [
+        A.CenterCrop(height=256, width=256)
     ]
 }
