@@ -90,7 +90,7 @@ transforms = {
         A.OneOf([
             A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.1,
                                rotate_limit=15,
-                               border_mode=cv2.BORDER_CONSTANT, value=0),
+                               border_mode=cv2.BORDER_CONSTANT),
                                # , value=0),
             # A.OpticalDistortion(distort_limit=0.11, shift_limit=0.15,
             #                     border_mode=cv2.BORDER_CONSTANT),
