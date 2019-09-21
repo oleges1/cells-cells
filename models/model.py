@@ -14,6 +14,7 @@ class model_whale(nn.Module):
         super().__init__()
         planes = 512
         self.model_name = model_name
+        self.criterion = nn.CrossEntropyLoss()
 
         if model_name == 'xception':
             self.basemodel = xception(pretrained)
@@ -198,10 +199,13 @@ class model_whale(nn.Module):
     def getLoss(self, global_feat, local_feat, results, labels, config, verbose=False):
         global_loss_value = global_loss(TripletLoss(margin=config.loss.margin), global_feat, labels)[0]
         local_loss_value = local_loss(TripletLoss(margin=config.loss.margin), local_feat, labels)[0]
-        loss_ = sigmoid_loss(results, labels, topk=config.loss.topk_sigmoid)
+        # loss_30 = sigmoid_loss(results, labels, topk=30)
+        # loss_5 = sigmoid_loss(results, labels, topk=5)
+        # loss_1 = sigmoid_loss(results, labels, topk=1)
+        loss_ce = self.criterion(results, labels)
         if verbose:
             print(f'Losses debug: global_loss_value: {config.loss.global_coef * global_loss_value}, local_loss_value: {config.loss.local_coef * local_loss_value}, sigmoid loss: {loss_}' )
-        self.loss = global_loss_value * config.loss.global_coef + local_loss_value * config.loss.local_coef + loss_
+        self.loss = global_loss_value * config.loss.global_coef + local_loss_value * config.loss.local_coef + loss_ce
 
 
 
