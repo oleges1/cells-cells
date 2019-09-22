@@ -10,6 +10,9 @@ from torch.nn.parallel.data_parallel import data_parallel
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 
+from radam import RAdam
+from lookahead import Lookahead
+
 def valid_eval(config, model, dataLoader_valid):
     with torch.no_grad():
         if config.train.enable_eval_on_val:
@@ -35,7 +38,9 @@ def train(config, num_classes=1108):
     if config.train.freeze:
         model.freeze()
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=config.train.lr,  betas=(0.9, 0.99), weight_decay=0.0002)
+    base_opt = RAdam(model.parameters(), lr=1e-2)
+    optimizer = Lookahead(base_opt)
+    # optimizer = torch.optim.Adam(model.parameters(), lr=config.train.lr,  betas=(0.9, 0.99), weight_decay=0.0002)
 
     resultDir = config.train.result_dir
     checkPoint = join(resultDir, 'checkpoint')

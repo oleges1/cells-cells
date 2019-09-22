@@ -98,9 +98,9 @@ transforms = {
             A.NoOp()
         ]),
 #         ZeroTopAndBottom(p=0.3),
-        A.RandomSizedCrop(min_max_height=(int(512 * 0.25), int(512 * 0.75)),
-                          height=256,
-                          width=256, p=1.),
+        A.RandomSizedCrop(min_max_height=(int(512 * 0.35), int(512 * 0.85)),
+                          height=320,
+                          width=320, p=1.),
 #         A.OneOf([
 #             A.RandomBrightnessContrast(brightness_limit=0.5,
 #                                        contrast_limit=0.4),
@@ -124,6 +124,6 @@ transforms = {
         A.VerticalFlip(p=0.5)
     ],
     'test' : [
-        A.CenterCrop(height=256, width=256)
+        A.CenterCrop(height=320, width=320, p=1.)
     ]
 }

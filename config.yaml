@@ -20,8 +20,8 @@ train:
     enable_eval_on_val: True
     random_seed: 42
 loss:
-    global_coef: 0.05
-    local_coef: 0.05
+    global_coef: 1.
+    local_coef: 1.
     verbose_interval: 20
     margin: 0.3 # before 0.3, empty for SoftMarginLoss
     topk_sigmoid: 30
