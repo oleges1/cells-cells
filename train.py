@@ -38,7 +38,7 @@ def train(config, num_classes=1108):
     if config.train.freeze:
         model.freeze()
 
-    base_opt = RAdam(model.parameters(), lr=1e-2)
+    base_opt = RAdam(model.parameters(), lr=config.train.lr)
     optimizer = Lookahead(base_opt)
     # optimizer = torch.optim.Adam(model.parameters(), lr=config.train.lr,  betas=(0.9, 0.99), weight_decay=0.0002)
 
