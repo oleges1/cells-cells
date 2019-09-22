@@ -87,16 +87,16 @@ class CustomDataset(Dataset):
 
 transforms = {
     'train': [
-        A.OneOf([
-            A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.1,
-                               rotate_limit=15,
-                               border_mode=cv2.BORDER_CONSTANT),
-                               # , value=0),
-            # A.OpticalDistortion(distort_limit=0.11, shift_limit=0.15,
-            #                     border_mode=cv2.BORDER_CONSTANT),
-                                # value=0),
-            A.NoOp()
-        ]),
+        # A.OneOf([
+        #     A.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.1,
+        #                        rotate_limit=15,
+        #                        border_mode=cv2.BORDER_CONSTANT),
+        #                        # , value=0),
+        #     # A.OpticalDistortion(distort_limit=0.11, shift_limit=0.15,
+        #     #                     border_mode=cv2.BORDER_CONSTANT),
+        #                         # value=0),
+        #     A.NoOp()
+        # ]),
 #         ZeroTopAndBottom(p=0.3),
         A.RandomSizedCrop(min_max_height=(int(512 * 0.35), int(512 * 0.85)),
                           height=320,
