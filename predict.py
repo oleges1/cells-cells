@@ -19,9 +19,9 @@ from functools import partial
 def predict_model(config, num_classes=1108):
     model = model_whale(num_classes=num_classes, inchannels=6, model_name=config.train.model_name).cuda()
     model.load_pretrain(os.path.join(config.test.checkpoints_path, '%08d_model.pth' % (config.test.epoch)), skip=[])
-    result = defaultdict(partial(np.ndarray, 0))
+    result = defaultdict(partial(np.ndarray, (num_classes,)))
     for site in [1, 2]:
-        test_dataset = CustomDataset(config.test.csv_file, config.test.img_dir, mode='test', site=site, transforms=transforms['test'])
+        test_dataset = CustomDataset(config.test.csv_file, config.test.img_dir, mode='test', site=site, transforms=transforms[config.test.augmetations])
         dataloader_test = DataLoader(test_dataset, batch_size=config.train.batch_size, num_workers=config.train.num_workers)
         with torch.no_grad():
             if config.test.enable_eval:

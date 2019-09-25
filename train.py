@@ -44,8 +44,8 @@ def train(config, num_classes=1108):
 
     resultDir = config.train.result_dir
     checkPoint = join(resultDir, 'checkpoint')
-    if not config.train.in_colab:
-        os.makedirs(checkPoint, exist_ok=True)
+#     if not config.train.in_colab:
+#         os.makedirs(checkPoint, exist_ok=True)
     train_dataset = CustomDataset(config.train.csv_file, config.train.img_dir, transforms=transforms['train'])
     dataset_size = len(train_dataset)
     indices = list(range(dataset_size))
@@ -100,11 +100,14 @@ def train(config, num_classes=1108):
             map5_batch += mapk(labels, results, k=5)
 
             if i % config.train.verbose_interval == 0:
-                print(f'epoch: {epoch}, iter: {i}, train_loss: {float(train_loss / config.train.verbose_interval)}, top1_batch: {float(top1_batch / config.train.verbose_interval)}, map5_batch: {float(map5_batch / config.train.verbose_interval)}')
+                print('epoch: %03d, iter: %05d, train_loss: %f, top1_batch: %f, map5_batch: %f' % (epoch, i, float(train_loss / config.train.verbose_interval), float(top1_batch / config.train.verbose_interval), float(map5_batch / config.train.verbose_interval)))
+                
+#                 print(f'epoch: {epoch}, iter: {i}, train_loss: {float(train_loss / config.train.verbose_interval)}, top1_batch: {float(top1_batch / config.train.verbose_interval)}, map5_batch: {float(map5_batch / config.train.verbose_interval)}')
                 train_loss, top1_batch, map5_batch = 0, 0, 0
 
                 valid_loss, top1_valid, map5_valid = valid_eval(config, model, validation_loader)
-                print(f'epoch: {epoch}, iter: {i}, valid_loss: {valid_loss}, top1_batch: {top1_valid}, map5_batch: {map5_valid}')
+                print('epoch: %03d, iter: %05d, valid_loss: %f, valid_top1_batch: %f, valid_map5_batch: %f' % (epoch, i, valid_loss, top1_valid, map5_valid))
+#                 print(f'epoch: {epoch}, iter: {i}, valid_loss: {valid_loss}, top1_batch: {top1_valid}, map5_batch: {map5_valid}')
 
 
 

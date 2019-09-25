@@ -1,35 +1,36 @@
 name: seresnext50
 train:
-    batch_size: 32
-    num_workers: 4
-    csv_file: train.csv
-    img_dir: .
+    batch_size: 36
+    num_workers: 8
+    csv_file: /data/cells/train.csv
+    img_dir: /data/cells
     model_name: seresnext50
-    pretrained: True
+    pretrained: False
     freeze: False
-    lr: 0.7e-3
-    load_cpk: False
-    start_epoch: 0
+    lr: 1.2e-4
+    load_cpk: True
+    start_epoch: 24
     epochs: 100
-    verbose_interval: 200
+    verbose_interval: 50
     save_period: 1
-    result_dir: /content/drive/My Drive/cells-cells
-    in_colab: True
+    result_dir: ./
+    in_colab: False
     validation_split: 0.01
     shuffle_dataset: True
     enable_eval_on_val: True
     random_seed: 42
 loss:
-    global_coef: 1.
-    local_coef: 1.
-    verbose_interval: 20
+    global_coef: 0.05
+    local_coef: 0.05
+    verbose_interval: 50
     margin: 0.3 # before 0.3, empty for SoftMarginLoss
     topk_sigmoid: 30
 test:
     use_leak: True
-    csv_file: test.csv
-    img_dir: .
-    checkpoints_path: /content/drive/My Drive/cells-cells/checkpoint
-    epoch: 6
-    save_path: /content/drive/My Drive/cells-cells/submission.csv
+    csv_file: /data/cells/test.csv
+    img_dir: /data/cells
+    checkpoints_path: ./checkpoint
+    epoch: 24
+    save_path: ./submission.csv
     enable_eval: True
+    augmetations: train

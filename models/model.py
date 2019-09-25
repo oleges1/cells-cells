@@ -201,7 +201,8 @@ class model_whale(nn.Module):
         loss_5 = sigmoid_loss(results, labels, topk=5)
         # loss_ce = cross_entropy(results, labels)
         if verbose:
-            print(f'Losses debug: global_loss_value: {config.loss.global_coef * global_loss_value}, local_loss_value: {config.loss.local_coef * local_loss_value}, sigmoid loss: {loss_30 + loss_5}' )
+            print('Losses debug: global_loss_value: %f, local_loss_value: %f, sigmoid loss: %f' % (config.loss.global_coef * global_loss_value, config.loss.local_coef * local_loss_value, loss_30 + loss_5))
+#             print(f'Losses debug: global_loss_value: {config.loss.global_coef * global_loss_value}, local_loss_value: {config.loss.local_coef * local_loss_value}, sigmoid loss: {loss_30 + loss_5}' )
         self.loss = global_loss_value * config.loss.global_coef + local_loss_value * config.loss.local_coef + loss_30 + loss_5
 
 
